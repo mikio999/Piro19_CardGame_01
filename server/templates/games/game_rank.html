@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="ranking-container">
+        <h2>Piro 명예의 전당</h2>
+        {% for player in players %}
+            <p>{{player.name}}님! 총 점수:{{player.score}}점</p>
+        {% endfor %}
+        <a href="/"><button>전적 목록</button></a>
+    </div>
+</body>
+</html>

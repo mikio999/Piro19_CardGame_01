@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
+from .models import *
+import random
 
 def game_detail_result(request, pk):
     return()
@@ -11,3 +13,10 @@ def game_detail_respond(request, pk):
 
 def main(request) :
     return render(request, 'games/main.html')
+def game_attack(request,pk):
+    
+    return render(request,'games/game_attack.html')
+
+def game_rank(request):
+    players=Player.objects.all().order_by('-score')
+    return render(request,'games/game_rank.html',{'players':players})
