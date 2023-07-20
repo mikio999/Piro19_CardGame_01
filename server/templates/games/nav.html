@@ -15,7 +15,11 @@
   </head>
   <body>
     <nav class="nav-container">
-      <a href="/" id="logo">Piro Team1 CARDGAME</a>
+      <a href="/" id="logo"
+        >Piro Team1 CARDGAME<img
+          src="{% static 'img/cards-logo.png'%}"
+          style="width: 30px; margin-left: 10px"
+      /></a>
       <ul>
         {% if user.is_authenticated %}
         <a href="/"> <li>게임하기</li></a>

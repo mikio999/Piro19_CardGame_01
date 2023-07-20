@@ -1,9 +1,16 @@
+#logo {
+  font-family: "MaplestoryOTFBold";
+}
+
 .nav-container {
-  margin-top: 10px;
+  padding-top: 10px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   white-space: nowrap;
+  height: 50px;
+  background-color: black;
+  opacity: 0.9;
 }
 
 .nav-container a {
@@ -18,6 +25,7 @@
 }
 
 .nav-container ul li {
+  font-family: "MaplestoryOTFBold";
   list-style: none;
   margin-left: 10px;
 }
