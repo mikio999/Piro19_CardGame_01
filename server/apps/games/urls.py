@@ -5,7 +5,7 @@ from django.urls import path
 from apps.games import views
 
 urlpatterns = [
-    path('/rankings', views.game_rank),
+    path('rankings', views.game_rank),
 ]
 
 if settings.DEBUG:
