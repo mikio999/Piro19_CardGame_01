@@ -7,8 +7,8 @@ from games.views import *
 app_name = 'games'
 
 urlpatterns = [
-    path('rankings', views.game_rank),
-    path('', views.main, name="main"),
+    path('rankings', game_rank),
+    path('', main, name="main"),
     path('detail/result/<int:pk>/', game_detail_result),
     path('detail/progress/<int:pk>/', game_detail_progress),
     path('detail/respond/<int:pk>/', game_detail_respond),
