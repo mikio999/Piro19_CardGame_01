@@ -1,0 +1,23 @@
+.nav-container {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  white-space: nowrap;
+}
+
+.nav-container a {
+  text-decoration: none;
+  margin-left: 20px;
+}
+
+.nav-container ul {
+  display: flex;
+  flex-direction: row;
+  margin-right: 20px;
+}
+
+.nav-container ul li {
+  list-style: none;
+  margin-left: 10px;
+}
