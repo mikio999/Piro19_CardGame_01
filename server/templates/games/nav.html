@@ -3,10 +3,47 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      .nav-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        white-space: nowrap;
+      }
+
+      .nav-container a {
+        text-decoration: none;
+        margin-left: 20px;
+      }
+
+      .nav-container ul {
+        display: flex;
+        flex-direction: row;
+        margin-right: 20px;
+      }
+
+      .nav-container ul li {
+        list-style: none;
+        margin-left: 10px;
+      }
+    </style>
     <title>Piro19_CardGame_01</title>
   </head>
   <body>
-    <nav>nav입니다~</nav>
+    <nav class="nav-container">
+      <a href="/" id="logo">Piro Team1 CARDGAME</a>
+      <ul>
+        {% if user.is_authenticated %}
+        <a href="/"> <li>게임하기</li></a>
+        <a href="/"> <li>랭킹보기</li></a>
+        <a href="/logout"> <li>로그아웃</li></a>
+        {% else %}
+        <a href="/login"><li>로그인</li></a>
+        <a href="/join"><li>회원가입</li></a>
+        {% endif %}
+      </ul>
+    </nav>
     <div>{% block content %}{% endblock %}</div>
   </body>
 </html>
