@@ -19,6 +19,7 @@ class Game(models.Model):
     # my_player=models.ForeignKey(Player,verbose_name="나",on_delete=models.CASCADE)
     # player=models.ForeignKey(Player,verbose_name="상대",on_delete=models.CASCADE)
     state=models.IntegerField(default=0)
+    # mode=models.IntegerField(default=0)
     result=models.IntegerField(default=0)
     my_card=models.IntegerField(default=0)
     player_card=models.IntegerField(default=0)
