@@ -1,3 +1,10 @@
 from django.shortcuts import render
 
-# Create your views here.
+def game_detail_result(request, pk):
+    return()
+
+def game_detail_progress(request, pk):
+    return()
+
+def game_detail_respond(request, pk):
+    return()
