@@ -14,9 +14,9 @@ def login(request) :
         print("login post")
 
         email = request.POST['email']
-        pwd = request.POST['pwd']
+        password = request.POST['password']
 
-        user = auth.authenticate(request, username=email, password=pwd)
+        user = auth.authenticate(request, username=email, password=password)
 
         if user is None :
             return redirect('/signup')
@@ -28,6 +28,7 @@ def login(request) :
 
 def logout(request) :
     auth.logout(request)
+
     return redirect('/')
 
 def signup(request):
@@ -35,15 +36,15 @@ def signup(request):
     if request.method == 'POST' :
         print("여기는 포스팅요청")
 
+        username = request.POST['username']
         email = request.POST['email']
-        pwd = request.POST['pwd']
+        password = request.POST['password']
 
-        User.objects.create_user(username=email, password=pwd)
+        User.objects.create_user(username=username, email=email, password=password)
 
 
         return redirect('/')
 
-    print("signup 마지막 부분")
     return render(request, 'games/signup.html')
 
 
