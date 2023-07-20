@@ -3,7 +3,9 @@ from .models import *
 import random
 
 def game_detail_result(request, pk):
-    return()
+    game = Game.objects.get(id=pk)
+    
+    return(request, 'game_detail.html')
 
 def game_detail_progress(request, pk):
     return()

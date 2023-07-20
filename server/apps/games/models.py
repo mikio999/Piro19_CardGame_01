@@ -17,8 +17,12 @@ class Game(models.Model):
     player=models.ForeignKey(Player,verbose_name="상대",on_delete=models.CASCADE,related_name="games")
     # random_cards=random.sample(range(1,11),5)
     CARD_CHOICES=[]
-    state=models.CharField(max_length=20,default=0)
+
+    # 진행중/결과/반격 상태
+    state=models.IntegerField(default=0)
+    # 높은 점수가 이기는지/낮은 점수가 이기는지
     mode=models.IntegerField(default=0)
+    # 게임에서 얻은 점수
     result=models.IntegerField(default=0)
     my_card=models.CharField(
         choices=CARD_CHOICES, max_length=5,blank=True
