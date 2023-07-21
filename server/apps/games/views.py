@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect, get_object_or_404
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.models import User
 from django.contrib import auth
@@ -37,7 +37,7 @@ def game_attack(request):
     if request.method == 'POST':
         selected_card = int(request.POST.get('selected_card'))
         player_id = request.POST.get('player_id')
-        my_player = request.user
+        my_player = get_object_or_404(Player, user=request.user)
         player = Player.objects.get(id=player_id)
 
         # 게임 모드 선택 (0: 숫자가 더 낮은 쪽이 이기는 모드, 1: 숫자가 더 높은 쪽이 이기는 모드)
@@ -139,14 +139,21 @@ def signup(request):
 
 
 def game_attack(request):
-    player = Player.objects.all()
-    if request.method == 'POST':
-        selected_cards = request.POST.getlist('selected_cards')
-        player_id = request.POST.get('player_id')
+    players = Player.objects.all()
 
+    if request.method == 'POST':
+        selected_card = int(request.POST.get('selected_card'))
+        player_id = request.POST.get('player_id')
         my_player = request.user
         player = Player.objects.get(id=player_id)
 
+        # 게임 모드 선택 (0: 숫자가 더 낮은 쪽이 이기는 모드, 1: 숫자가 더 높은 쪽이 이기는 모드)
+        mode = random.randint(0, 1)
+
+        # 플레이어와 상대방이 고른 카드
+        my_card = selected_card
+
+        # 게임 객체 생성
         game = Game.objects.create(
             my_player=my_player,
             player=player,
@@ -154,10 +161,12 @@ def game_attack(request):
             mode=mode,
             result=0 
         )
-        return render(request, 'games/game_attack.html', {'players': player})
+
+        return redirect('games:game_attack')
+
     else:
         random_cards = random.sample(range(1, 11), 5)
-        return render(request, 'games/game_attack.html', {'random_cards': random_cards, 'players': player})
+        return render(request, 'games/game_attack.html', {'random_cards': random_cards, 'players': players})
 
 def game_revenge(request, pk):
     game = Game.objects.get(id=pk)
