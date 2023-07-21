@@ -1,0 +1,21 @@
+<ul>
+    {% for game in games %}
+    <li>
+    <p class="list_game_id">{{ game.id }}</p>
+    <p class="list_my_player">-{{ game.player }} VS {{ game.my_player }} </p>
+
+    {% if game.state == '진행중' %}
+        {% if game.my_player == request.user %}
+            <p class="state">{{ game.state }}...</p>
+            <a href="#">게임 취소</a>
+        {% else %}
+            <a href="#">반격하기</a>
+        {% endif %}
+    {% else %}
+        <p class="state">결과: {{ game.state }}</p>
+    {% endif %}
+    <a href="#">게임정보</a>
+    </li>
+    <hr />
+    {% endfor %}
+</ul>

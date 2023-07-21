@@ -16,3 +16,5 @@ urlpatterns = [
     path('detail/progress/<int:pk>/', views.game_detail_progress),
     path('detail/respond/<int:pk>/', views.game_detail_respond),
 ]
+
+    path('list', views.list),
