@@ -12,9 +12,8 @@ urlpatterns = [
     path('login/', views.login, name='login'),
     path('logout/', views.logout, name='logout'),
     path('signup/', views.signup, name='signup'),
+    path('list', views.list),
     path('detail/result/<int:pk>/', views.game_detail_result),
     path('detail/progress/<int:pk>/', views.game_detail_progress),
     path('detail/respond/<int:pk>/', views.game_detail_respond),
 ]
-
-    path('list', views.list),
