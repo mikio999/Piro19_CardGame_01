@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect, get_object_or_404
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.models import User
 from django.contrib import auth
@@ -25,7 +25,6 @@ def game_detail_progress(request, pk):
 
 def game_detail_respond(request, pk):
     game = Game.objects.get(id=pk)
-
     return render(request, 'games/game_detail_respond.html', {'game' : game})
 
 def main(request) :
@@ -37,7 +36,7 @@ def game_attack(request):
     if request.method == 'POST':
         selected_card = int(request.POST.get('selected_card'))
         player_id = request.POST.get('player_id')
-        my_player = request.user
+        my_player = get_object_or_404(Player, user=request.user)
         player = Player.objects.get(id=player_id)
 
         # 게임 모드 선택 (0: 숫자가 더 낮은 쪽이 이기는 모드, 1: 숫자가 더 높은 쪽이 이기는 모드)
@@ -55,40 +54,13 @@ def game_attack(request):
             result=0  # 초기 결과를 0으로 설정
         )
 
-        return redirect('games:game_attack')
+        return redirect('games:game_list')
 
     else:
         random_cards = random.sample(range(1, 11), 5)
         return render(request, 'games/game_attack.html', {'random_cards': random_cards, 'players': players})
 
 
-def game_revenge(request, pk):
-    game = Game.objects.get(id=pk)
-
-    if request.method == 'POST':
-        game.player_card = int(request.POST["selected_card"])
-
-        # 게임 결과 계산
-        if game.mode == 0:
-            if game.my_card < game.player_card:
-                game.result = game.my_card  # 플레이어가 이기며 자신이 고른 카드의 숫자만큼의 점수 획득
-            else:
-                game.result = -game.my_card  # 상대가 이기며 자신이 고른 카드의 숫자만큼의 점수 손실
-        else:
-            if game.my_card > game.player_card:
-                game.result = game.my_card  # 플레이어가 이기며 자신이 고른 카드의 숫자만큼의 점수 획득
-            else:
-                game.result = -game.my_card  # 상대가 이기며 자신이 고른 카드의 숫자만큼의 점수 손실
-
-        game.save()
-
-    else:
-        cards = list(range(1, 11))
-        cards.remove(int(game.my_card))
-        random_cards = random.sample(cards, 5)
-        ctx = {'game': game, 'random_cards': random_cards}
-
-    return render(request, 'games/game_revenge.html', context=ctx)
 
 def login(request) :
     print("login")
@@ -137,31 +109,11 @@ def signup(request):
 
     return render(request, 'games/signup.html')
 
-
-def game_attack(request):
-    player = Player.objects.all()
-    if request.method == 'POST':
-        selected_cards = request.POST.getlist('selected_cards')
-        player_id = request.POST.get('player_id')
-
-        my_player = request.user
-        player = Player.objects.get(id=player_id)
-
-        game = Game.objects.create(
-            my_player=my_player,
-            player=player,
-            my_card=my_card,
-            mode=mode,
-            result=0 
-        )
-        return render(request, 'games/game_attack.html', {'players': player})
-    else:
-        random_cards = random.sample(range(1, 11), 5)
-        return render(request, 'games/game_attack.html', {'random_cards': random_cards, 'players': player})
-
 def game_revenge(request, pk):
     game = Game.objects.get(id=pk)
 
+    game.state = 1
+    game.save()
     if request.method == 'POST':
         game.player_card = int(request.POST.get('selected_card'))
         game.save()
@@ -205,9 +157,8 @@ def game_rank(request):
     return render(request,'games/game_rank.html',{'players':players})
 
 def list(request):
-    my_player_instance, _ = Player.objects.get_or_create(user=request.user, name=request.user)
-
-    games = Game.objects.filter(Q(my_player=request.user) | Q(player=my_player_instance)).order_by('-id')
+    my_player_instance = request.user.player
+    games = Game.objects.filter(Q(my_player=my_player_instance) | Q(player=my_player_instance)).order_by('-id')
     ctx = {
         'games': games,
     }

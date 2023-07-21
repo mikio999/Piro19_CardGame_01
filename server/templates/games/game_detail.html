@@ -16,13 +16,24 @@
     <p>{{game.my_player}} : {{game.my_card}}</p>
     <hr>
     <!-- 결과가 승리인지 패인지 저장하는 변수 안만들어도 되나..? -->
-    {% if game.result > 0 %}
-    <p>결과 : 승리</p>
+    {% if game.my_player == request.user.player %}
+        {% if game.result > 0 %}
+        <p>결과 : 승리</p>
+        <p>점수 : {{game.my_card}}점</p>
+        {% else %}
+        <p>결과 : 패배</p>
+        <p>점수 : - {{game.my_card}}점</p>
+        {% endif %}
     {% else %}
+    {% if game.result > 0 %}
     <p>결과 : 패배</p>
+    <p>점수 : - {{game.player_card}}점</p>
+    {% else %}
+    <p>결과 : 승리</p>
+    <p>점수 : {{game.player_card}}점</p>
+    {% endif %}
     {% endif %}
     <hr>
-    <p>점수 : {{game.result}}점</p>
     <!-- 전적목록으로 돌아가도록 -->
     <a class="btn btn-outline-success btn-sm fw-bold border-2" href="/list" >전적목록</a>
 </div>
