@@ -148,9 +148,12 @@ def game_attack(request):
 
 def game_revenge(request, pk):
     game = Game.objects.get(id=pk)
+    # game.player_card = 3
+    # game.save()
 
     if request.method == 'POST':
-        game.player_card = int(request.POST["selected_card"])
+        game.player_card = int(request.POST.get('selected_card'))
+        game.save()
 
         # 게임 결과 계산
         if game.mode == 0:
@@ -164,15 +167,15 @@ def game_revenge(request, pk):
             else:
                 game.result = -game.my_card  # 상대가 이기며 자신이 고른 카드의 숫자만큼의 점수 손실
 
-        game.save()
+        
         
         game.my_player.score += game.result
         game.my_player.save()
 
         game.player.score -= game.result
         game.player.save()
-
-        return redirect("list")
+        game.save()
+        return redirect(f"/detail/result/{game.id}")
 
     else:
         cards = [1,2,3,4,5,6,7,8,9,10]
@@ -180,7 +183,7 @@ def game_revenge(request, pk):
         random_cards = random.sample(cards, 5)
         ctx = {'game': game, 'random_cards': random_cards}
 
-    return render(request, 'games/game_revenge.html', context=ctx)
+        return render(request, 'games/game_revenge.html', context=ctx)
 
 def game_rank(request):
     players=Player.objects.all().order_by('-score')
