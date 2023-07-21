@@ -5,6 +5,12 @@ from .models import *
 from django.db.models import Q
 from .forms import GameForm
 import random
+import os
+
+#구글 소셜로그인 변수 
+state = os.environ.get("STATE")
+BASE_URL = 'http://127.0.0.1:8000'
+GOOGLE_CALLBACK_URI = BASE_URL + 'api/user/google/callback/'
 
 def game_detail_result(request, pk):
     game = Game.objects.get(id=pk)
@@ -41,6 +47,11 @@ def login(request) :
             return redirect('/')
 
     return render(request, 'games/login.html')
+
+def google_login(request):
+    scope = "https://www.googleapis.com/auth/userinfo.email"
+    client_id = os.environ.get("SOCIAL_AUTH_GOOGLE_CLIENT_ID")
+    return redirect(f"https://accounts.google.com/o/oauth2/v2/auth?client_id={client_id}&response_type=code&redirect_uri={GOOGLE_CALLBACK_URI}&scope={scope}")
 
 def logout(request) :
     auth.logout(request)

@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # #dj_rest_auth
+    # 'dj_rest_auth',
+    # 'dj_rest_auth.registration',
     #allauth
     'allauth',
     'allauth.account',
@@ -66,6 +69,8 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
+
+LOGIN_REDIRECT_URL = '/'
 
 ROOT_URLCONF = 'config.urls'
 
