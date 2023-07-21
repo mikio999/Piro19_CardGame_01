@@ -3,7 +3,7 @@
 {% block content %}
 <div>
     <p>user {{game.my_player}}님이 공격했습니다!</p>
-    <form method="post" action="/detail/result/{{game.id}}">
+    <form method="post" action="/detail/result/{{game.id}}/">
         {% csrf_token %}
         <label for="selected_card">내가 고른 카드</label>
         <select name="selected_card" id="selected_card">

@@ -123,7 +123,6 @@ def game_attack(request):
         player_id = request.POST.get('player_id')
         my_player = request.user
         player = Player.objects.get(id=player_id)
-        #state
 
         # 게임 모드 선택 (0: 숫자가 더 낮은 쪽이 이기는 모드, 1: 숫자가 더 높은 쪽이 이기는 모드)
         mode = random.randint(0, 1)
@@ -137,7 +136,7 @@ def game_attack(request):
             player=player,
             my_card=my_card,
             mode=mode,
-            result=0  # 초기 결과를 0으로 설정
+            result=0 
         )
 
         return redirect('games:game_attack')
@@ -152,10 +151,8 @@ def game_revenge(request, pk):
 
     if request.method == 'POST':
         game.player_card = int(request.POST["selected_card"])
-        #state
 
         # 게임 결과 계산
-        # 내가 player인 상황 - but 기준은 my_player로 잡자
         if game.mode == 0:
             if game.my_card < game.player_card:
                 game.result = game.my_card  # 플레이어가 이기며 자신이 고른 카드의 숫자만큼의 점수 획득
@@ -167,16 +164,18 @@ def game_revenge(request, pk):
             else:
                 game.result = -game.my_card  # 상대가 이기며 자신이 고른 카드의 숫자만큼의 점수 손실
 
-        game.my_player.score+=game.result
-        game.player.score-=game.result
+        game.save()
         
+        game.my_player.score += game.result
+        game.my_player.save()
 
-        # game.save()
+        game.player.score -= game.result
+        game.player.save()
+
         return redirect("list")
 
     else:
-        # cards = list(range(1, 11))
-        cards=[1,2,3,4,5,6,7,8,9,10]
+        cards = [1,2,3,4,5,6,7,8,9,10]
         cards.remove(int(game.my_card))
         random_cards = random.sample(cards, 5)
         ctx = {'game': game, 'random_cards': random_cards}
