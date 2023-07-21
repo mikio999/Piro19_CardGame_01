@@ -18,10 +18,30 @@ def game_attack(request):
         my_player = request.user
         player = Player.objects.get(id=player_id)
 
+        choices = list(range(1, 11))
+        choices.remove(int(player_id))
+        player_card = random.choice(choices)
+
+        mode = random.randint(0, 1)
+
+        # 게임 결과 계산
+        if mode == 0:
+            if player_card < sum(map(int, selected_cards)):
+                result = 1 
+            else:
+                result = -1  
+            if player_card > sum(map(int, selected_cards)):
+                result = 1 
+            else:
+                result = -1 
+
         game = Game.objects.create(
             my_player=my_player,
             player=player,
-            my_card=','.join(selected_cards)
+            my_card=','.join(selected_cards),
+            player_card=player_card,
+            mode=mode,
+            result=result
         )
         return render(request, 'games/game_attack.html', {'players': player})
     else:
