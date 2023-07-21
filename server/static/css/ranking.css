@@ -11,6 +11,10 @@
     border-radius:50px;
 }
 
+.ranking-container h2{
+    font-family: "MaplestoryOTFBold";
+}
+
 .ranking-container a{
     display:block;
     width:fit-content;
