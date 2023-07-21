@@ -25,7 +25,6 @@ def game_detail_progress(request, pk):
 
 def game_detail_respond(request, pk):
     game = Game.objects.get(id=pk)
-
     return render(request, 'games/game_detail_respond.html', {'game' : game})
 
 def main(request) :
@@ -55,7 +54,7 @@ def game_attack(request):
             result=0  # 초기 결과를 0으로 설정
         )
 
-        return redirect('games:game_attack')
+        return redirect('games:game_list')
 
     else:
         random_cards = random.sample(range(1, 11), 5)
@@ -113,6 +112,8 @@ def signup(request):
 def game_revenge(request, pk):
     game = Game.objects.get(id=pk)
 
+    game.state = 1
+    game.save()
     if request.method == 'POST':
         game.player_card = int(request.POST.get('selected_card'))
         game.save()

@@ -1,4 +1,6 @@
-{% extends 'games/nav.html' %} {% load static %} {% block content %}
+{% extends 'games/nav.html' %} 
+{% load static %} 
+{% block content %}
 <!-- request.user에 대한 name수정해야함 -->
 <p class="m-4">현재 플레이어: {{ request.user }}</p>
 <hr />
@@ -11,51 +13,35 @@
       </p>
     </div>
     <div class="col">
-      {% if game.my_player == request.user %} {% if game.state == 0 %}
-      <p class="list_state">
-        진행중…
-        <a
-          class="btn btn-outline-success btn-sm fw-bold border-2"
-          href="{% url 'games:delete' game.pk %}"
-          >게임 취소</a
-        >
-      </p>
-      {% elif game.state == 1 %} {% if game.result > 0 %}
-      <p class="state">결과: 승리</p>
-      {% else %}
-      <p class="state">결과: 패배</p>
-      {% endif %} {% else %}
-      <p>
-        <a
-          class="btn btn-outline-success btn-sm fw-bold border-2"
-          href="/game/{{game.id}}/revenge"
-          >반격하기</a
-        >
-      </p>
-      {% endif %} {% else %} {% if game.state == 2 %}
-      <p class="list_state">
-        진행중…
-        <a
-          class="btn btn-outline-success btn-sm fw-bold border-2"
-          href="{% url 'games:delete' game.pk %}"
-          >게임 취소</a
-        >
-      </p>
-      {% elif game.state == 1 %} {% if game.result > 0 %}
-      <p class="state">결과: 패배</p>
-      {% else %}
-      <p class="state">결과: 승리</p>
-      {% endif %} {% else %}
-      <p>
-        <a
-          class="btn btn-outline-success btn-sm fw-bold border-2"
-          href="/game/{{game.id}}/revenge"
-          >반격하기</a
-        >
-      </p>
-      {% endif %} {% endif %}
+    {% if game.my_player == request.user.player %}
+        {% if game.state == 0 %}
+            <p class="list_state">진행중… <a class="btn btn-outline-success btn-sm fw-bold border-2" href="{% url 'games:delete' game.pk %}">게임 취소</a></p>
+        {% elif game.state == 1 %}
+            {% if game.result > 0 %}
+                <p class="state">결과: 승리</p>
+            {% else %}
+                <p class="state">결과: 패배</p>
+            {% endif %}
+        {% else %}
+        <p><a class="btn btn-outline-success btn-sm fw-bold border-2" href="/game/{{game.id}}/revenge">반격하기</a></p>
+        {% endif %}
+    {% else %}
+        {% if game.state == 2 %}
+            <p class="list_state">진행중… <a class="btn btn-outline-success btn-sm fw-bold border-2" href="{% url 'games:delete' game.pk %}">게임 취소</a></p>
+        {% elif game.state == 1 %}
+            {% if game.result > 0 %}
+                <p class="state">결과: 패배</p>
+            {% else %}
+                <p class="state">결과: 승리</p>
+            {% endif %}
+        {% else %}
+        <p><a class="btn btn-outline-success btn-sm fw-bold border-2" href="/game/{{game.id}}/revenge">반격하기</a></p>
+        {% endif %}
+    {% endif %}
     </div>
     <div class="col">
+
+    {% if game.my_player == request.user.player %}
       {% if game.state == 0 %}
       <p>
         <a
@@ -81,6 +67,34 @@
         >
       </p>
       {% endif %}
+
+    {% else %}
+      {% if game.state == 2 %}
+      <p>
+        <a
+          class="btn btn-outline-success btn-sm fw-bold border-2"
+          href="{% url 'games:detail_progress' pk=game.pk %}"
+          >게임정보</a
+        >
+      </p>
+      {% elif game.state == 1 %}
+      <p>
+        <a
+          class="btn btn-outline-success btn-sm fw-bold border-2"
+          href="{% url 'games:detail_result' pk=game.pk %}"
+          >게임정보</a
+        >
+      </p>
+      {% else %}
+      <p>
+        <a
+          class="btn btn-outline-success btn-sm fw-bold border-2"
+          href="{% url 'games:detail_respond' pk=game.pk %}"
+          >게임정보</a
+        >
+      </p>
+      {% endif %}
+    {% endif %}
     </div>
   </div>
   {% endfor %}
