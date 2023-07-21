@@ -83,7 +83,7 @@ def game_revenge(request, pk):
         game.save()
 
     else:
-        cards = list(range(1, 11))
+        cards = [1,2,3,4,5,6,7,8,9,10]
         cards.remove(int(game.my_card))
         random_cards = random.sample(cards, 5)
         ctx = {'game': game, 'random_cards': random_cards}
