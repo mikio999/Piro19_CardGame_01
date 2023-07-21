@@ -38,7 +38,7 @@
     <div class="col">
     {% if game.state == 0 %}
         <p><a class="btn btn-outline-success btn-sm fw-bold border-2 "href="{% url 'games:detail_progress' pk=game.pk %}">게임정보</a></p>
-    {% elif gmae.state == 1 %}
+    {% elif game.state == 1 %}
         <p><a class="btn btn-outline-success btn-sm fw-bold border-2"href="{% url 'games:detail_result' pk=game.pk %}">게임정보</a></p>
     {% else %}
         <p><a class="btn btn-outline-success btn-sm fw-bold border-2" href="{% url 'games:detail_respond' pk=game.pk %}">게임정보</a></p>
