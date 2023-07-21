@@ -17,7 +17,7 @@
             <p class="list_state">진행중... <a class="btn btn-outline-success btn-sm fw-bold border-2" href="{% url 'games:delete' game.pk %}">게임 취소</a></p>
             
         {% else %}
-            <p><a class="btn btn-outline-success btn-sm fw-bold border-2" href="#">반격하기</a></p>
+            <p><a class="btn btn-outline-success btn-sm fw-bold border-2" href="/game/{{game.id}}/revenge">반격하기</a></p>
         {% endif %}
     {% else %}
         {% if game.my_player == request.user %}
@@ -46,5 +46,5 @@
     </div>
     </div>
     {% endfor %}
-</ㅇ>
+</div>
 {% endblock %}

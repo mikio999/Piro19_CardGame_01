@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib import auth
 from .models import *
 from django.db.models import Q
-from .forms import GameForm
+# from .forms import GameForm
 import random
 import os
 
@@ -136,6 +136,69 @@ def signup(request):
             return render(request, 'games/main.html')
 
     return render(request, 'games/signup.html')
+
+
+def game_attack(request):
+    player = Player.objects.all()
+    if request.method == 'POST':
+        selected_cards = request.POST.getlist('selected_cards')
+        player_id = request.POST.get('player_id')
+
+        my_player = request.user
+        player = Player.objects.get(id=player_id)
+
+        game = Game.objects.create(
+            my_player=my_player,
+            player=player,
+            my_card=my_card,
+            mode=mode,
+            result=0 
+        )
+        return render(request, 'games/game_attack.html', {'players': player})
+    else:
+        random_cards = random.sample(range(1, 11), 5)
+        return render(request, 'games/game_attack.html', {'random_cards': random_cards, 'players': player})
+
+def game_revenge(request, pk):
+    game = Game.objects.get(id=pk)
+
+    if request.method == 'POST':
+        game.player_card = int(request.POST.get('selected_card'))
+        game.save()
+
+        # 게임 결과 계산
+        if game.mode == 0:
+            if game.my_card < game.player_card:
+                game.result = game.my_card  # 플레이어가 이기며 자신이 고른 카드의 숫자만큼의 점수 획득
+                game.my_player.score += game.my_card
+                game.player.score -= game.player_card
+            else:
+                game.result = -game.my_card  # 상대가 이기며 자신이 고른 카드의 숫자만큼의 점수 손실
+                game.my_player.score -= game.my_card
+                game.player.score += game.player_card
+        else:
+            if game.my_card > game.player_card:
+                game.result = game.my_card  # 플레이어가 이기며 자신이 고른 카드의 숫자만큼의 점수 획득
+                game.my_player.score += game.my_card
+                game.player.score -= game.player_card
+            else:
+                game.result = -game.my_card
+                game.my_player.score -= game.my_card
+                game.player.score += game.player_card
+
+        
+        game.my_player.save()
+        game.player.save()
+        game.save()
+        return redirect(f"/detail/result/{game.id}")
+
+    else:
+        cards = [1,2,3,4,5,6,7,8,9,10]
+        cards.remove(int(game.my_card))
+        random_cards = random.sample(cards, 5)
+        ctx = {'game': game, 'random_cards': random_cards}
+
+        return render(request, 'games/game_revenge.html', context=ctx)
 
 def game_rank(request):
     players=Player.objects.all().order_by('-score')

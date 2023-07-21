@@ -1,0 +1,22 @@
+.ranking-container{
+
+    /* display:flex;
+    flex-direction: column;
+    justify-content: center; */
+    color:white;
+    width:50%;
+    /* height:50%; */
+    padding:30px;
+    background-color: black;
+    border-radius:50px;
+}
+
+.ranking-container h2{
+    font-family: "MaplestoryOTFBold";
+}
+
+.ranking-container a{
+    display:block;
+    width:fit-content;
+    margin:auto;
+}
