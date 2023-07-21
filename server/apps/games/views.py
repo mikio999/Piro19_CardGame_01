@@ -7,13 +7,17 @@ import random
 def game_detail_result(request, pk):
     game = Game.objects.get(id=pk)
 
-    return(request, 'game_detail.html')
+    return(request, 'game_detail.html', {'game' : game})
 
 def game_detail_progress(request, pk):
-    return()
+    game = Game.objects.get(id=pk)
+
+    return(request, 'game_detail_progress.html', {'game' : game})
 
 def game_detail_respond(request, pk):
-    return()
+    game = Game.objects.get(id=pk)
+
+    return(request, 'game_detail_respond.html', {'game' : game})
 
 def main(request) :
     return render(request, 'games/main.html')
