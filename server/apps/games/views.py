@@ -1,5 +1,4 @@
 from django.shortcuts import render,redirect
-from allauth.socialaccount.models import SocialAccount
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.models import User
 from django.contrib import auth
