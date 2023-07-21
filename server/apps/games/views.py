@@ -101,3 +101,7 @@ def list(request):
     }
     return render(request, 'games/game_list.html', context=ctx)
 
+def game_delete(request, pk):
+    game = Game.objects.get(id=pk)
+    game.delete()
+    return redirect('games:game_list')

@@ -1,21 +1,45 @@
+{% extends 'games/nav.html' %}
+{% load static %}
+
+{% block content %}
+<!-- request.user에 대한 name수정해야함 -->
+<p>현재 플레이어: {{ request.user }}</p>
+<hr />
 <ul>
     {% for game in games %}
     <li>
-    <p class="list_game_id">{{ game.id }}</p>
-    <p class="list_my_player">-{{ game.player }} VS {{ game.my_player }} </p>
+    <p class="list_my_player">{{ game.id }} - {{ game.player }} VS {{ game.my_player }} </p>
 
-    {% if game.state == '진행중' %}
+    {% if game.state != 1 %}
         {% if game.my_player == request.user %}
-            <p class="state">{{ game.state }}...</p>
-            <a href="#">게임 취소</a>
+            <p class="list_state">진행중...</p>
+            <a href="{% url 'games:delete' game.pk %}">게임 취소</a>
         {% else %}
-            <a href="#">반격하기</a>
+            <p><a href="#">반격하기</a></p>
         {% endif %}
     {% else %}
-        <p class="state">결과: {{ game.state }}</p>
+        {% if game.myplayer == request.user %}
+            {% if game.my_card > game.player_card %}
+                <p class="state">결과: 승리</p>
+            {% else %}
+                <p class="state">결과: 패배</p>
+            {% endif %}
+        {% else %}
+            {% if game.my_card > game.player_card %}
+                <p class="state">결과: 패배</p>
+            {% else %}
+                <p class="state">결과: 승리</p>
+            {% endif %}
+        {% endif %}
     {% endif %}
-    <a href="#">게임정보</a>
+    {% if game.state == 0 %}
+        <a href="{% url 'games:detail_progress' pk=game.pk %}">게임정보</a>
+    {% elif gmae.state == 1 %}
+        <a href="{% url 'games:detail_result' pk=game.pk %}">게임정보</a>
+    {% else %}
+        <a href="{% url 'games:detail_respond' pk=game.pk %}">게임정보</a>
+    {% endif %}
     </li>
-    <hr />
     {% endfor %}
 </ul>
+{% endblock %}
