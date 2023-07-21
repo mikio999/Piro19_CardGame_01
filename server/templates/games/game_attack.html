@@ -7,7 +7,6 @@
         {% csrf_token %}
         <label for="selected_card">내가 고른 카드</label>
         <select name="selected_card" id="selected_card">
-
             {% for card in random_cards %}
                 <option value="{{ card }}">{{ card }}</option>
             {% endfor %}
