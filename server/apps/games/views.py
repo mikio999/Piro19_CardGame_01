@@ -94,7 +94,7 @@ def game_attack(request):
         random_cards = random.sample(range(1, 11), 5)
         players=Player.objects.all()
         ctx={'random_cards':random_cards,'players':players}
-
+        return render(request, 'games/game_attack.html', context=ctx)
 
 
 def game_attack(request):
