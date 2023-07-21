@@ -159,20 +159,24 @@ def game_revenge(request, pk):
         if game.mode == 0:
             if game.my_card < game.player_card:
                 game.result = game.my_card  # 플레이어가 이기며 자신이 고른 카드의 숫자만큼의 점수 획득
+                game.my_player.score += game.my_card
+                game.player.score -= game.player_card
             else:
                 game.result = -game.my_card  # 상대가 이기며 자신이 고른 카드의 숫자만큼의 점수 손실
+                game.my_player.score -= game.my_card
+                game.player.score += game.player_card
         else:
             if game.my_card > game.player_card:
                 game.result = game.my_card  # 플레이어가 이기며 자신이 고른 카드의 숫자만큼의 점수 획득
+                game.my_player.score += game.my_card
+                game.player.score -= game.player_card
             else:
-                game.result = -game.my_card  # 상대가 이기며 자신이 고른 카드의 숫자만큼의 점수 손실
+                game.result = -game.my_card
+                game.my_player.score -= game.my_card
+                game.player.score += game.player_card
 
         
-        
-        game.my_player.score += game.result
         game.my_player.save()
-
-        game.player.score -= game.result
         game.player.save()
         game.save()
         return redirect(f"/detail/result/{game.id}")
