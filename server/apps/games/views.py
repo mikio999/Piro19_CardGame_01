@@ -158,17 +158,9 @@ def game_attack(request):
     else:
         random_cards = random.sample(range(1, 11), 5)
         return render(request, 'games/game_attack.html', {'random_cards': random_cards, 'players': player})
-    
-def game_revenge(request):
-    players=Player.objects.all()
-    return render(request,'games/game_revenge.html',{'players':players})
-
-def game_revenge(request,pk):
 
 def game_revenge(request, pk):
     game = Game.objects.get(id=pk)
-    # game.player_card = 3
-    # game.save()
 
     if request.method == 'POST':
         game.player_card = int(request.POST.get('selected_card'))
