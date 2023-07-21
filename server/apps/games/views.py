@@ -1,10 +1,18 @@
 from django.shortcuts import render,redirect
+from allauth.socialaccount.models import SocialAccount
+from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.models import User
 from django.contrib import auth
 from .models import *
 from django.db.models import Q
 from .forms import GameForm
 import random
+import os
+
+#구글 소셜로그인 변수 
+state = os.environ.get("STATE")
+BASE_URL = 'http://127.0.0.1:8000'
+GOOGLE_CALLBACK_URI = BASE_URL + 'api/user/google/callback/'
 
 def game_detail_result(request, pk):
     game = Game.objects.get(id=pk)
@@ -22,7 +30,7 @@ def game_detail_respond(request, pk):
     return render(request, 'games/game_detail_respond.html', {'game' : game})
 
 def main(request) :
-    return render(request, 'games/main.html')
+    return render(request, 'games/main.html',)
 
 def login(request) :
     print("login")
@@ -32,34 +40,40 @@ def login(request) :
         email = request.POST['email']
         password = request.POST['password']
 
-        user = auth.authenticate(request, username=email, password=password)
+        user = auth.authenticate(request, email=email, password=password)
 
         if user is None :
-            return redirect('/signup')
+            print('login fail')
+            return redirect('/login')
         else :
             auth.login(request, user)
             return redirect('/')
 
     return render(request, 'games/login.html')
 
+def google_login(request):
+    scope = "https://www.googleapis.com/auth/userinfo.email"
+    client_id = os.environ.get("SOCIAL_AUTH_GOOGLE_CLIENT_ID")
+    return redirect(f"https://accounts.google.com/o/oauth2/v2/auth?client_id={client_id}&response_type=code&redirect_uri={GOOGLE_CALLBACK_URI}&scope={scope}")
+
 def logout(request) :
     auth.logout(request)
-
     return redirect('/')
 
-def signup(request):
-    print("signup 실행!")
-    if request.method == 'POST' :
-        print("여기는 포스팅요청")
-
+def signup(request):   
+    if request.method == 'POST':
         username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password']
 
-        User.objects.create_user(username=username, email=email, password=password)
-
-
-        return redirect('/')
+        try:
+            existing_user = User.objects.get(username=username)
+            return redirect('/login/')
+        except User.DoesNotExist:
+            user = User.objects.create_user(username=username, email=email, password=password)
+            user.backend = f'{ModelBackend.__module__}.{ModelBackend.__qualname__}'
+            auth.login(request, user)
+            return render(request, 'games/main.html')
 
     return render(request, 'games/signup.html')
 def game_attack(request):

@@ -1,4 +1,33 @@
 {% extends 'games/nav.html' %} {% load static %} {% block content %}
-<div>메인페이지입니다~</div>
-
+  <div class="d-flex justify-content-center" style="display:flex; flex-direction: column; align-items: center; margin-top:50px; font-family: NEXON Lv2 Gothic;">
+    <img
+          src="{% static 'img/poker-cards.png'%}"
+          style="width: 100px; margin-left: 10px"
+      />
+    <h1 class="mt-4">모두 다함께 카드게임!</h1></br>
+    <h2>닌텐도보다 즐겁다! 한판 승부 숫자카드게임!</h2>
+    {% if user.is_authenticated %}
+    <div class="mt-4">{{user.username}}님이 로그인 중</div>
+    <a
+      href="/game/attack"
+      class="btn btn-primary mt-2"
+      style="text-decoration: none; width: 200px; font-family: MaplestoryOTFBold"
+      ;
+    >
+      게임하기
+    </a>
+    <a
+      href="/list"
+      class="btn btn-success mt-2"
+      style="text-decoration: none; width: 200px; font-family: MaplestoryOTFBold"
+      ;
+    >
+      전적보기
+    </a>
+    {% else %}
+    <div class="mt-4">로그인 후 이용가능합니다.</div>
+    <a href="/login" class="btn btn-primary mt-4" style="width: 200px;">로그인</a>
+    {% endif %}
+  </div>
+</div>
 {% endblock %}
