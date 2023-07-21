@@ -3,19 +3,21 @@
 
 {% block content %}
 <!-- request.user에 대한 name수정해야함 -->
-<p>현재 플레이어: {{ request.user }}</p>
+<p class="m-4">현재 플레이어: {{ request.user }}</p>
 <hr />
-<ul>
+<div class="container text-center">
     {% for game in games %}
-    <li>
+    <div class="row m-4">
+    <div class="col">
     <p class="list_my_player">{{ game.id }} - {{ game.player }} VS {{ game.my_player }} </p>
-
+    </div>
+    <div class="col">
     {% if game.state != 1 %}
         {% if game.my_player == request.user %}
-            <p class="list_state">진행중...</p>
-            <a href="{% url 'games:delete' game.pk %}">게임 취소</a>
+            <p class="list_state">진행중... <a class="btn btn-outline-success btn-sm fw-bold border-2" href="{% url 'games:delete' game.pk %}">게임 취소</a></p>
+            
         {% else %}
-            <p><a href="#">반격하기</a></p>
+            <p><a class="btn btn-outline-success btn-sm fw-bold border-2" href="#">반격하기</a></p>
         {% endif %}
     {% else %}
         {% if game.my_player == request.user %}
@@ -32,14 +34,17 @@
             {% endif %}
         {% endif %}
     {% endif %}
+    </div>
+    <div class="col">
     {% if game.state == 0 %}
-        <a href="{% url 'games:detail_progress' pk=game.pk %}">게임정보</a>
-    {% elif gmae.state == 1 %}
-        <a href="{% url 'games:detail_result' pk=game.pk %}">게임정보</a>
+        <p><a class="btn btn-outline-success btn-sm fw-bold border-2 "href="{% url 'games:detail_progress' pk=game.pk %}">게임정보</a></p>
+    {% elif game.state == 1 %}
+        <p><a class="btn btn-outline-success btn-sm fw-bold border-2"href="{% url 'games:detail_result' pk=game.pk %}">게임정보</a></p>
     {% else %}
-        <a href="{% url 'games:detail_respond' pk=game.pk %}">게임정보</a>
+        <p><a class="btn btn-outline-success btn-sm fw-bold border-2" href="{% url 'games:detail_respond' pk=game.pk %}">게임정보</a></p>
     {% endif %}
-    </li>
+    </div>
+    </div>
     {% endfor %}
-</ul>
+</ㅇ>
 {% endblock %}
