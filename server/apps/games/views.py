@@ -9,21 +9,20 @@ import random
 def game_detail_result(request, pk):
     game = Game.objects.get(id=pk)
 
-    return(request, 'game_detail.html', {'game' : game})
+    return render(request, 'games/game_detail.html', {'game' : game})
 
 def game_detail_progress(request, pk):
     game = Game.objects.get(id=pk)
 
-    return(request, 'game_detail_progress.html', {'game' : game})
+    return render(request, 'games/game_detail_progress.html', {'game' : game})
 
 def game_detail_respond(request, pk):
     game = Game.objects.get(id=pk)
 
-    return(request, 'game_detail_respond.html', {'game' : game})
+    return render(request, 'games/game_detail_respond.html', {'game' : game})
 
 def main(request) :
     return render(request, 'games/main.html')
-
 
 def login(request) :
     print("login")
@@ -83,7 +82,6 @@ def game_attack(request):
         ctx={'random_cards':random_cards,'players':players}
 
 
-    return render(request,'games/game_attack.html',context=ctx)
 
 def game_revenge(request,pk):
 
