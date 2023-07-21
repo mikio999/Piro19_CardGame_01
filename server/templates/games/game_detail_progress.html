@@ -3,12 +3,12 @@
 
 {% block content %}
 <div>
-    <h2>GAME LIST</h2>
+    <p>{{ game.id }}-{{ game.player }} VS {{ game.my_player }}</p>
     <p>진행중...</p>
     <p>나 : {{game.my_card}}</p>
     <!-- 게임취소기능 -->
-    <a href="#" class="game_detail_respond_btn btn-outline-success fw-bold">반격하기</a>
+    <a href="{% url 'games:delete' game.pk %}" class="game_delete_btn btn-outline-success fw-bold">게임취소</a>
     <!-- 전적목록으로 돌아가도록 -->
-    <a href="#" class="back-to-list-btn btn-outline-success fw-bold">전적목록</a>
+    <a href="/list" class="back-to-list-btn btn-outline-success fw-bold">전적목록</a>
 </div>
 {% endblock %}

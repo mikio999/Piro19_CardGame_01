@@ -17,17 +17,17 @@ GOOGLE_CALLBACK_URI = BASE_URL + 'api/user/google/callback/'
 def game_detail_result(request, pk):
     game = Game.objects.get(id=pk)
 
-    return(request, 'game_detail.html', {'game' : game})
+    return render(request, 'games/game_detail.html', {'game' : game})
 
 def game_detail_progress(request, pk):
     game = Game.objects.get(id=pk)
 
-    return(request, 'game_detail_progress.html', {'game' : game})
+    return render(request, 'games/game_detail_progress.html', {'game' : game})
 
 def game_detail_respond(request, pk):
     game = Game.objects.get(id=pk)
 
-    return(request, 'game_detail_respond.html', {'game' : game})
+    return render(request, 'games/game_detail_respond.html', {'game' : game})
 
 def main(request) :
     return render(request, 'games/main.html',)
@@ -76,6 +76,24 @@ def signup(request):
             return render(request, 'games/main.html')
 
     return render(request, 'games/signup.html')
+def game_attack(request):
+    
+    
+    if request.method=="POST":
+        my_player=request.user
+        my_card=request.POST['selected_card']
+        player_id=request.POST['player_id']
+        #mode random 선택도 해줘야 할 듯        
+        Game.objects.create(
+            my_player=my_player,
+            my_card=my_card,
+            player=Player.objects.get(id=player_id)
+        )   
+        return render(request, 'games/game_attack.html')
+    else:
+        random_cards = random.sample(range(1, 11), 5)
+        players=Player.objects.all()
+        ctx={'random_cards':random_cards,'players':players}
 
 
 
@@ -101,6 +119,22 @@ def game_attack(request):
 def game_revenge(request):
     players=Player.objects.all()
     return render(request,'games/game_revenge.html',{'players':players})
+
+def game_revenge(request,pk):
+
+    game=Game.objects.get(id=pk)
+
+    if request.method=='POST':
+        
+        game.player_card=int(request.POST["selected_card"])
+
+    else:
+        cards=[1,2,3,4,5,6,7,8,9,10]
+        cards.remove(int(game.my_card)) #models가 charField로 되어있어서
+        random_cards=random.sample(cards,5)
+        ctx={'game':game,'random_cards':random_cards}
+
+    return render(request,'games/game_revenge.html',context=ctx)
 
 def game_rank(request):
     players=Player.objects.all().order_by('-score')
