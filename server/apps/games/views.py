@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib import auth
 from .models import *
 from django.db.models import Q
-from .forms import GameForm
+# from .forms import GameForm
 import random
 import os
 
