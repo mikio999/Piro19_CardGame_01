@@ -34,7 +34,7 @@
     {% endif %}
     {% if game.state == 0 %}
         <a href="{% url 'games:detail_progress' pk=game.pk %}">게임정보</a>
-    {% elif gmae.state == 1 %}
+    {% elif game.state == 1 %}
         <a href="{% url 'games:detail_result' pk=game.pk %}">게임정보</a>
     {% else %}
         <a href="{% url 'games:detail_respond' pk=game.pk %}">게임정보</a>

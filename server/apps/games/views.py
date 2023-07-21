@@ -172,7 +172,7 @@ def game_revenge(request, pk):
         
 
         # game.save()
-        return redirect("/list")
+        return redirect("list")
 
     else:
         # cards = list(range(1, 11))
