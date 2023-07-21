@@ -1,0 +1,13 @@
+{% extends 'games/nav.html' %}
+{% load static %}
+
+{% block content %}
+<div class="text-center mt-4">
+    <p>{{ game.id }}-{{ game.player }} VS {{ game.my_player }}</p>
+    <!-- 반격하기 url로 이동하도록 주소만 변경하기 -->
+    <a href="{% url 'games:game_revenge' pk=game.pk %}" class="btn btn-outline-success btn-sm fw-bold border-2">반격하기</a>
+    <hr>
+    <!-- 전적목록(list)로 url만 변경하기 -->
+    <a class="btn btn-outline-success btn-sm fw-bold border-2" href="/list" >전적목록</a>
+</div>
+{% endblock %}

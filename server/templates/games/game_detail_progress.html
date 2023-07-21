@@ -1,0 +1,14 @@
+{% extends 'games/nav.html' %}
+{% load static %}
+
+{% block content %}
+<div class="text-center mt-4">
+    <p>{{ game.id }}-{{ game.player }} VS {{ game.my_player }}</p>
+    <p>진행중...</p>
+    <p>{{game.my_player}} : {{game.my_card}}</p>
+    <!-- 게임취소기능 -->
+    <a class="btn btn-outline-success btn-sm fw-bold border-2" href="{% url 'games:delete' game.pk %}" >게임취소</a>
+    <!-- 전적목록으로 돌아가도록 -->
+    <a class="btn btn-outline-success btn-sm fw-bold border-2" href="/list" >전적목록</a>
+</div>
+{% endblock %}

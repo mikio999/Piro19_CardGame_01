@@ -1,0 +1,27 @@
+{% extends 'games/nav.html' %} {% load static %} {% block content %}
+<div class="attack-page">
+  <p><h1>내가 고른 카드</h1></p>
+  <form method="post" action="{% url 'games:game_attack' %}">
+    {% csrf_token %}
+    <label for="selected_card">내가 고른 카드</label>
+    <select name="selected_card" id="selected_card">
+      {% for card in random_cards %}
+      <option value="{{ card }}">{{ card }}</option>
+      {% endfor %}
+    </select>
+    <br />
+    <label for="sort">공격할 상대는?</label>
+    <select name="player_id" id="player_id">
+        {% for player in players %}
+        {% if player == request.user.player %}
+            {# 현재 사용자와 같은 player 객체는 건너뜀 #}
+        {% else %}
+            <option value="{{ player.id }}">{{ player.name }}</option>
+        {% endif %}
+    {% endfor %}
+    </select>
+    <br />
+    <input type="submit" value="선택 완료 및 공격" class="btn btn-warning" />
+  </form>
+</div>
+{% endblock %}
