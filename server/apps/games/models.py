@@ -1,6 +1,5 @@
 from django.db import models
 from django.conf import settings
-import random
 
 # Create your models here.
 class Player(models.Model):
