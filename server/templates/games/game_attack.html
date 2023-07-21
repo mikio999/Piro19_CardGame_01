@@ -12,9 +12,13 @@
     <br />
     <label for="sort">공격할 상대는?</label>
     <select name="player_id" id="player_id">
-      {% for player in players %}
-      <option value="{{ player.id }}">{{ player.name }}</option>
-      {% endfor %}
+        {% for player in players %}
+        {% if player == request.user.player %}
+            {# 현재 사용자와 같은 player 객체는 건너뜀 #}
+        {% else %}
+            <option value="{{ player.id }}">{{ player.name }}</option>
+        {% endif %}
+    {% endfor %}
     </select>
     <br />
     <input type="submit" value="선택 완료 및 공격" class="btn btn-warning" />
