@@ -2,9 +2,10 @@
 {% load static %} 
 {% block content %}
 <!-- request.user에 대한 name수정해야함 -->
-<p class="m-4">현재 플레이어: {{ request.user }}</p>
+
 <hr />
-<div class="container text-center">
+<div class="text-center">
+<p class="m-4">현재 플레이어: {{ request.user }}</p>
   {% for game in games %}
   <div class="row m-4">
     <div class="col">
