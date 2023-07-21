@@ -22,6 +22,9 @@
       /></a>
       <ul>
         {% if user.is_authenticated %}
+        <span style="color: yellowgreen; font-family: MaplestoryOTFBold"
+          >{{ request.user }}</span
+        >
         <a href="/game/attack"> <li>게임하기</li></a>
         <a href="/rankings"> <li>랭킹보기</li></a>
         <a href="/logout"> <li>로그아웃</li></a>
@@ -32,9 +35,7 @@
       </ul>
     </nav>
     <div>
-        <div class="container">
-            {% block content %}{% endblock %}
-        </div>
+      <div class="container">{% block content %}{% endblock %}</div>
     </div>
   </body>
 </html>
