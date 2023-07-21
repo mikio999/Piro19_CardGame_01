@@ -62,8 +62,8 @@ def signup(request):
         return redirect('/')
 
     return render(request, 'games/signup.html')
+
 def game_attack(request):
-    
     
     if request.method=="POST":
         my_player=request.user
@@ -75,11 +75,12 @@ def game_attack(request):
             my_card=my_card,
             player=Player.objects.get(id=player_id)
         )   
-        return render(request, 'games/game_attack.html')
+        return redirect("/list")
     else:
         random_cards = random.sample(range(1, 11), 5)
         players=Player.objects.all()
         ctx={'random_cards':random_cards,'players':players}
+        return render(request, 'games/game_attack.html',context=ctx)
 
 
 
