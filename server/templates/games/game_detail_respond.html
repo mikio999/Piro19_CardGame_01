@@ -3,11 +3,11 @@
 
 {% block content %}
 <div>
-    <h2>GAME LIST</h2>
+    <p>{{ game.id }}-{{ game.player }} VS {{ game.my_player }}</p>
     <!-- 반격하기 url로 이동하도록 주소만 변경하기 -->
-    <a href="#" class="game_detail_respond_btn btn-outline-success fw-bold">반격하기</a>
+    <a href="{% url 'game_revenge'%}" class="revenge_btn btn-outline-success fw-bold">반격하기</a>
     <hr>
     <!-- 전적목록(list)로 url만 변경하기 -->
-    <a href="/apps/games/list" class="back-to-list-btn btn-outline-success fw-bold">전적목록</a>
+    <a href="{% url 'game_list'%}" class="back-to-list-btn btn-outline-success fw-bold">전적목록</a>
 </div>
 {% endblock %}

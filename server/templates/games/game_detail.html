@@ -3,7 +3,7 @@
 
 {% block content %}
 <div>
-    <h2>GAME LIST</h2>
+    <p>{{ game.id }}-{{ game.player }} VS {{ game.my_player }}</p>
     <hr>
     <!-- 0이 숫자가 작은 사람이 이기는거, 1이 숫자가 큰 사람이 이기는 걸로 -->
     {% if game.mode == 0 %}
@@ -24,6 +24,6 @@
     <hr>
     <p>점수 : {{game.result}}점</p>
     <!-- 전적목록으로 돌아가도록 -->
-    <a href="/apps/games/list" class="back-to-list-btn btn-outline-success fw-bold">전적목록</a>
+    <a href="{% url 'game_list'%}" class="back-to-list-btn btn-outline-success fw-bold">전적목록</a>
 </div>
 {% endblock %}
