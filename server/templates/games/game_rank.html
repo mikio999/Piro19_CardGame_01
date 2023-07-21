@@ -1,4 +1,5 @@
 {% extends 'games/nav.html' %}
+{% load static %}
 {% block content %}
 <!DOCTYPE html>
 <html lang="ko">
@@ -13,8 +14,9 @@
         {% for player in players %}
             <p>{{player.name}}님! 총 점수:{{player.score}}점</p>
         {% endfor %}
-        <a href="/"><button>전적 목록</button></a>
+        <a href="/"><button class="btn btn-primary">전적 목록</button></a>
     </div>
+    
 </body>
 </html>
 {% endblock %}

@@ -1,5 +1,6 @@
 @import "./Nav.css";
 @import "./signup.css";
+@import "./ranking.css";
 @font-face {
   font-family: "NEXON Lv1 Gothic OTF";
   src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF.woff")
@@ -28,4 +29,11 @@
 
 body {
   background-color: black;
+}
+
+.container{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    height:100vh;
 }
