@@ -188,7 +188,7 @@ def game_rank(request):
     return render(request,'games/game_rank.html',{'players':players})
 
 def list(request):
-    my_player_instance, _ = Player.objects.get_or_create(user=request.user, name='my_player')
+    my_player_instance, _ = Player.objects.get_or_create(user=request.user, name=request.user)
 
     games = Game.objects.filter(Q(my_player=request.user) | Q(player=my_player_instance)).order_by('-id')
     ctx = {

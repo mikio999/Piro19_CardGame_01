@@ -20,5 +20,3 @@ class Game(models.Model):
     result=models.IntegerField(default=0) # 게임에서 얻은 점수
     my_card=models.IntegerField(default=0)
     player_card=models.IntegerField(default=0)
-
-print(Player.user)
