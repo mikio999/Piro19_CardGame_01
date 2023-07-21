@@ -32,9 +32,60 @@ body {
   background-color: black;
 }
 
-.container{
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    height:100vh;
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.ranking-container {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.attack-page {
+  font-family: "MaplestoryOTFBold";
+  font-size: 20px;
+}
+
+.attack-page h1 {
+  font-family: "MaplestoryOTFBold";
+}
+
+.attack-page select {
+  padding: 2px;
+  margin-left: 5px;
+  font-family: "MaplestoryOTFBold";
+}
+
+.attack-page input {
+  margin-top: 20px;
+  font-family: "MaplestoryOTFBold";
+  color: brown;
+  font-size: 22px;
+}
+
+.attack-page label {
+  margin-top: 5px;
+  font-family: "MaplestoryOTFBold";
+}
+
+.text-center h2 {
+  font-family: "MaplestoryOTFBold";
+  margin-bottom: 50px;
+}
+
+.text-center p {
+  font-family: "MaplestoryOTFBold";
+}
+
+.text-center p {
+  white-space: nowrap;
+  margin-left: 15px;
+}
+
+.text-center div {
+  align-items: center;
+  justify-content: center;
 }
