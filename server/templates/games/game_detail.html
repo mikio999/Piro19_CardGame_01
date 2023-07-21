@@ -3,9 +3,9 @@
 
 {% block content %}
 <div>
-    <h2>GAME LIST</h2>
+    <p>{{ game.id }}-{{ game.player }} VS {{ game.my_player }}</p>
     <hr>
-    <!-- 일단은 그냥 내 임의로 0이 숫자가 작은 사람이 이기는거, 1이 숫자가 큰 사람이 이기는 걸로 -->
+    <!-- 0이 숫자가 작은 사람이 이기는거, 1이 숫자가 큰 사람이 이기는 걸로 -->
     {% if game.mode == 0 %}
     <p>숫자가 더 작은 사람이 대결에서 이깁니다</p>
     {% elif game.mode == 1 %}
@@ -16,10 +16,14 @@
     <p>나 : {{game.my_card}}</p>
     <hr>
     <!-- 결과가 승리인지 패인지 저장하는 변수 안만들어도 되나..? -->
-    <p>결과 : </p>
+    {% if game.result > 0 %}
+    <p>결과 : 승리</p>
+    {% else %}
+    <p>결과 : 패배</p>
+    {% endif %}
     <hr>
     <p>점수 : {{game.result}}점</p>
     <!-- 전적목록으로 돌아가도록 -->
-    <a href="#" class="back-to-list-btn btn-outline-success fw-bold">전적목록</a>
+    <a href="/list" class="back-to-list-btn btn-outline-success fw-bold">전적목록</a>
 </div>
 {% endblock %}
