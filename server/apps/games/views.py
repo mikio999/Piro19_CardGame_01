@@ -1,4 +1,6 @@
 from django.shortcuts import render,redirect
+from allauth.socialaccount.models import SocialAccount
+from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.models import User
 from django.contrib import auth
 from .models import *
@@ -28,7 +30,7 @@ def game_detail_respond(request, pk):
     return(request, 'game_detail_respond.html', {'game' : game})
 
 def main(request) :
-    return render(request, 'games/main.html')
+    return render(request, 'games/main.html',)
 
 def login(request) :
     print("login")
@@ -38,10 +40,11 @@ def login(request) :
         email = request.POST['email']
         password = request.POST['password']
 
-        user = auth.authenticate(request, username=email, password=password)
+        user = auth.authenticate(request, email=email, password=password)
 
         if user is None :
-            return redirect('/signup')
+            print('login fail')
+            return redirect('/login')
         else :
             auth.login(request, user)
             return redirect('/')
@@ -55,22 +58,22 @@ def google_login(request):
 
 def logout(request) :
     auth.logout(request)
-
     return redirect('/')
 
-def signup(request):
-    print("signup 실행!")
-    if request.method == 'POST' :
-        print("여기는 포스팅요청")
-
+def signup(request):   
+    if request.method == 'POST':
         username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password']
 
-        User.objects.create_user(username=username, email=email, password=password)
-
-
-        return redirect('/')
+        try:
+            existing_user = User.objects.get(username=username)
+            return redirect('/login/')
+        except User.DoesNotExist:
+            user = User.objects.create_user(username=username, email=email, password=password)
+            user.backend = f'{ModelBackend.__module__}.{ModelBackend.__qualname__}'
+            auth.login(request, user)
+            return render(request, 'games/main.html')
 
     return render(request, 'games/signup.html')
 

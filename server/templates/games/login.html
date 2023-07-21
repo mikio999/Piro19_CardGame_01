@@ -25,7 +25,9 @@
       />
     </div>
   </div>
-  <button type="submit" class="btn btn-primary">log in</button>
-  <a href="{% provider_login_url 'google' %}">구글 로그인</a>
+  <button type="submit" class="btn btn-light">일반 로그인</button>
+  <a class="btn btn-primary mt-3" href="{% provider_login_url 'google' %}"
+    >구글 로그인</a
+  >
 </form>
 {% endblock %}
