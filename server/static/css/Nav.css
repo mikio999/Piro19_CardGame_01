@@ -1,0 +1,31 @@
+#logo {
+  font-family: "MaplestoryOTFBold";
+}
+
+.nav-container {
+  padding-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  white-space: nowrap;
+  height: 50px;
+  background-color: black;
+  opacity: 0.9;
+}
+
+.nav-container a {
+  text-decoration: none;
+  margin-left: 20px;
+}
+
+.nav-container ul {
+  display: flex;
+  flex-direction: row;
+  margin-right: 20px;
+}
+
+.nav-container ul li {
+  font-family: "MaplestoryOTFBold";
+  list-style: none;
+  margin-left: 10px;
+}
