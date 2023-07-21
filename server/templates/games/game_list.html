@@ -18,14 +18,14 @@
             <p><a href="#">반격하기</a></p>
         {% endif %}
     {% else %}
-        {% if game.myplayer == request.user %}
-            {% if game.my_card > game.player_card %}
+        {% if game.my_player == request.user %}
+            {% if game.result > 0 %}
                 <p class="state">결과: 승리</p>
             {% else %}
                 <p class="state">결과: 패배</p>
             {% endif %}
         {% else %}
-            {% if game.my_card > game.player_card %}
+            {% if game.result > 0 %}
                 <p class="state">결과: 패배</p>
             {% else %}
                 <p class="state">결과: 승리</p>
