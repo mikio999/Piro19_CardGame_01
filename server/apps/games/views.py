@@ -40,13 +40,14 @@ def login(request) :
         email = request.POST['email']
         password = request.POST['password']
 
-        user = auth.authenticate(request, email=email, password=password)
+        user = auth.authenticate(request, username=email, password=password)
 
         if user is None :
             print('login fail')
             return redirect('/login')
         else :
             auth.login(request, user)
+            player, _ = Player.objects.get_or_create(user=user, name=user.username)
             return redirect('/')
 
     return render(request, 'games/login.html')
@@ -70,7 +71,7 @@ def signup(request):
             existing_user = User.objects.get(username=username)
             return redirect('/login/')
         except User.DoesNotExist:
-            user = User.objects.create_user(username=username, email=email, password=password)
+            user = User.objects.create_user(username=email, email=email, password=password)
             user.backend = f'{ModelBackend.__module__}.{ModelBackend.__qualname__}'
             auth.login(request, user)
             return render(request, 'games/main.html')

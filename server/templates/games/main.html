@@ -7,7 +7,7 @@
     <h1 class="mt-4">모두 다함께 카드게임!</h1></br>
     <h2>닌텐도보다 즐겁다! 한판 승부 숫자카드게임!</h2>
     {% if user.is_authenticated %}
-    <div class="mt-4">{{user.username}}님이 로그인 중</div>
+    <div class="mt-4"><span style="color:blue; font-family: MaplestoryOTFBold">{{user.username}}</span>님이 로그인 중</div>
     <a
       href="/game/attack"
       class="btn btn-primary mt-2"
