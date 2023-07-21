@@ -151,6 +151,7 @@ def game_revenge(request, pk):
 
     if request.method == 'POST':
         game.player_card = int(request.POST["selected_card"])
+        #state
 
         # 게임 결과 계산
         # 내가 player인 상황 - but 기준은 my_player로 잡자
