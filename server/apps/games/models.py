@@ -16,7 +16,7 @@ class Player(models.Model):
 class Game(models.Model):
     my_player=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     player=models.ForeignKey(Player,verbose_name="상대",on_delete=models.CASCADE,related_name="games")
-    state=models.IntegerField(max_length=20,default=0)
+    state=models.IntegerField(default=0)
     mode=models.IntegerField(default=0)
     result=models.IntegerField(default=0)
     my_card=models.IntegerField(default=0)
