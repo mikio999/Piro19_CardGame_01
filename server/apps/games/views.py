@@ -1,10 +1,13 @@
 from django.shortcuts import render,redirect
+from django.contrib.auth.models import User
+from django.contrib import auth
 from .models import *
 import random
 
 # Create your views here.
 def main(request) :
     return render(request, 'games/main.html')
+    print("login")
 
 def game_attack(request):
     
