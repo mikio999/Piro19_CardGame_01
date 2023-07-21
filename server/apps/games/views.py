@@ -132,6 +132,7 @@ def signup(request):
             user = User.objects.create_user(username=email, email=email, password=password)
             user.backend = f'{ModelBackend.__module__}.{ModelBackend.__qualname__}'
             auth.login(request, user)
+            player, _ = Player.objects.get_or_create(user=user, name=user.username)
             return render(request, 'games/main.html')
 
     return render(request, 'games/signup.html')
