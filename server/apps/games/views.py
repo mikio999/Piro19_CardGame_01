@@ -75,13 +75,13 @@ def game_revenge(request,pk):
 
     if request.method=='POST':
         
-        game.player_card=request.POST["selected_card"]
+        game.player_card=int(request.POST["selected_card"])
 
     else:
         cards=[1,2,3,4,5,6,7,8,9,10]
-        cards.remove(game.my_card)
+        cards.remove(int(game.my_card)) #models가 charField로 되어있어서
         random_cards=random.sample(cards,5)
-        ctx={'random_cards':random_cards}
+        ctx={'game':game,'random_cards':random_cards}
 
     return render(request,'games/game_revenge.html',context=ctx)
 

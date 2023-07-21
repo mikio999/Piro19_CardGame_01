@@ -2,12 +2,12 @@
 {% load static %} 
 {% block content %}
 <div>
-    <p>내가 고른 카드</p>
+    <p>user {{game.my_player}}님이 공격했습니다!</p>
     <form method="post" action="{% url 'games:game_attack' %}">
         {% csrf_token %}
         <label for="selected_card">내가 고른 카드</label>
         <select name="selected_card" id="selected_card">
-
+            
             {% for card in random_cards %}
                 <option value="{{ card }}">{{ card }}</option>
             {% endfor %}
