@@ -47,6 +47,7 @@ def login(request) :
             return redirect('/login')
         else :
             auth.login(request, user)
+            player, _ = Player.objects.get_or_create(user=user, name=user.username)
             return redirect('/')
 
     return render(request, 'games/login.html')
